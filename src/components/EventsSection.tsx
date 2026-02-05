@@ -1,55 +1,30 @@
+import { useEffect, useState } from 'react';
 import { Calendar, Clock, MapPin, Users, ChevronRight } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
+import { getEvents, Event } from '@/services/events';
 
 const EventsSection = () => {
-  const upcomingEvents = [
-    {
-      id: 1,
-      title: "Community Iftar",
-      date: "2024-03-15",
-      time: "7:30 PM",
-      location: "Main Prayer Hall",
-      description: "Join us for a community iftar during Ramadan. All families welcome.",
-      category: "Community",
-      attendees: 120,
-      arabic: "إفطار جماعي"
-    },
-    {
-      id: 2,
-      title: "Islamic History Lecture",
-      date: "2024-03-20",
-      time: "7:00 PM",
-      location: "Education Room",
-      description: "Learn about the Golden Age of Islam with Dr. Ahmed Hassan.",
-      category: "Education",
-      attendees: 45,
-      arabic: "محاضرة التاريخ الإسلامي"
-    },
-    {
-      id: 3,
-      title: "Youth Football Tournament",
-      date: "2024-03-25",
-      time: "2:00 PM",
-      location: "Cheltenham Sports Centre",
-      description: "Annual football tournament for youth aged 12-18.",
-      category: "Sports",
-      attendees: 60,
-      arabic: "بطولة كرة القدم للشباب"
-    },
-    {
-      id: 4,
-      title: "Charity Fundraiser Dinner",
-      date: "2024-03-30",
-      time: "6:00 PM",
-      location: "Main Hall",
-      description: "Fundraising dinner for our local food bank initiative.",
-      category: "Charity",
-      attendees: 200,
-      arabic: "عشاء خيري"
+  const [upcomingEvents, setUpcomingEvents] = useState<Event[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    async function fetchEvents() {
+      try {
+        const data = await getEvents();
+        setUpcomingEvents(data);
+      } catch (err) {
+        console.error('Failed to fetch events:', err);
+        setError('Failed to load events');
+      } finally {
+        setLoading(false);
+      }
     }
-  ];
+
+    fetchEvents();
+  }, []);
 
   const announcements = [
     {
@@ -81,14 +56,14 @@ const EventsSection = () => {
     });
   };
 
-  const getCategoryColor = (category: string) => {
+  const getCategoryColor = (category: string | undefined) => {
     const colors: { [key: string]: string } = {
       Community: 'bg-primary',
       Education: 'bg-gold',
       Sports: 'bg-green-500',
       Charity: 'bg-red-500'
     };
-    return colors[category] || 'bg-muted';
+    return colors[category || ''] || 'bg-muted';
   };
 
   return (
@@ -113,6 +88,18 @@ const EventsSection = () => {
               Upcoming Events
             </h3>
             
+            {loading && (
+              <p className="text-muted-foreground">Loading events...</p>
+            )}
+
+            {error && (
+              <p className="text-red-500">{error}</p>
+            )}
+
+            {!loading && !error && upcomingEvents.length === 0 && (
+              <p className="text-muted-foreground">No upcoming events</p>
+            )}
+
             <div className="space-y-6">
               {upcomingEvents.map((event) => (
                 <Card key={event.id} className="prayer-time-card group hover:scale-[1.02]">
@@ -122,11 +109,15 @@ const EventsSection = () => {
                         <CardTitle className="text-lg text-primary group-hover:text-primary-light transition-colors">
                           {event.title}
                         </CardTitle>
-                        <p className="text-sm font-arabic text-gold">{event.arabic}</p>
+                        {event.arabic && (
+                          <p className="text-sm font-arabic text-gold">{event.arabic}</p>
+                        )}
                       </div>
-                      <Badge className={`${getCategoryColor(event.category)} text-white w-fit`}>
-                        {event.category}
-                      </Badge>
+                      {event.category && (
+                        <Badge className={`${getCategoryColor(event.category)} text-white w-fit`}>
+                          {event.category}
+                        </Badge>
+                      )}
                     </div>
                   </CardHeader>
                   
@@ -151,10 +142,12 @@ const EventsSection = () => {
                     </div>
                     
                     <div className="flex items-center justify-between mt-4 pt-4 border-t border-border">
-                      <div className="flex items-center space-x-2 text-sm text-muted-foreground">
-                        <Users className="w-4 h-4" />
-                        <span>{event.attendees} registered</span>
-                      </div>
+                      {event.attendees && (
+                        <div className="flex items-center space-x-2 text-sm text-muted-foreground">
+                          <Users className="w-4 h-4" />
+                          <span>{event.attendees} registered</span>
+                        </div>
+                      )}
                       <Button variant="outline" size="sm" className="group-hover:bg-primary group-hover:text-primary-foreground transition-colors">
                         Learn More
                         <ChevronRight className="w-4 h-4 ml-1" />
@@ -166,7 +159,7 @@ const EventsSection = () => {
             </div>
           </div>
 
-          {/* Announcements */}
+          {/* Announcements - keep existing code */}
           <div>
             <h3 className="text-2xl font-bold text-primary mb-6">
               Announcements

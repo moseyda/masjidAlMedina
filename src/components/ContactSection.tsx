@@ -1,10 +1,70 @@
+import { useState } from 'react';
 import { Phone, Mail, MapPin, Clock, MessageSquare } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
+import { submitContactMessage } from '@/services/contact';
+import { useToast } from '@/hooks/use-toast';
+
 
 const ContactSection = () => {
+  // Form state
+  const [formData, setFormData] = useState({
+    firstName: '',
+    lastName: '',
+    email: '',
+    phone: '',
+    subject: '',
+    message: ''
+  });
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const { toast } = useToast();
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const { name, value } = e.target;
+    setFormData(prev => ({ ...prev, [name]: value }));
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setIsSubmitting(true);
+
+    try {
+      await submitContactMessage({
+        name: `${formData.firstName} ${formData.lastName}`,
+        email: formData.email,
+        phone: formData.phone,
+        subject: formData.subject,
+        message: formData.message
+      });
+
+      toast({
+        title: 'Message sent successfully!',
+        description: 'We typically respond within 24 hours during business days.',
+      });
+
+      // Reset form
+      setFormData({
+        firstName: '',
+        lastName: '',
+        email: '',
+        phone: '',
+        subject: '',
+        message: ''
+      });
+    } catch (error) {
+      console.error('Failed to send message:', error);
+      toast({
+        title: 'Failed to send message',
+        description: 'Please try again or contact us directly by phone.',
+        variant: 'destructive',
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
   const contactInfo = [
     {
       icon: <Phone className="w-5 h-5" />,
@@ -110,7 +170,6 @@ const ContactSection = () => {
             </Card>
           </div>
 
-          {/* Contact Form and Map */}
           <div className="lg:col-span-2 space-y-8">
             {/* Contact Form */}
             <Card className="prayer-time-card">
@@ -124,19 +183,33 @@ const ContactSection = () => {
                 </p>
               </CardHeader>
               <CardContent>
-                <form className="space-y-4">
+                <form onSubmit={handleSubmit} className="space-y-4">
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div>
                       <label className="text-sm font-medium text-foreground mb-2 block">
                         First Name *
                       </label>
-                      <Input placeholder="Enter your first name" />
+                      <Input
+                        name="firstName"
+                        value={formData.firstName}
+                        onChange={handleInputChange}
+                        placeholder="Enter your first name"
+                        required
+                        disabled={isSubmitting}
+                      />
                     </div>
                     <div>
                       <label className="text-sm font-medium text-foreground mb-2 block">
                         Last Name *
                       </label>
-                      <Input placeholder="Enter your last name" />
+                      <Input
+                        name="lastName"
+                        value={formData.lastName}
+                        onChange={handleInputChange}
+                        placeholder="Enter your last name"
+                        required
+                        disabled={isSubmitting}
+                      />
                     </div>
                   </div>
                   
@@ -144,67 +217,72 @@ const ContactSection = () => {
                     <label className="text-sm font-medium text-foreground mb-2 block">
                       Email Address *
                     </label>
-                    <Input type="email" placeholder="Enter your email address" />
+                    <Input
+                      type="email"
+                      name="email"
+                      value={formData.email}
+                      onChange={handleInputChange}
+                      placeholder="Enter your email address"
+                      required
+                      disabled={isSubmitting}
+                    />
                   </div>
                   
                   <div>
                     <label className="text-sm font-medium text-foreground mb-2 block">
                       Phone Number
                     </label>
-                    <Input type="tel" placeholder="Enter your phone number" />
+                    <Input
+                      type="tel"
+                      name="phone"
+                      value={formData.phone}
+                      onChange={handleInputChange}
+                      placeholder="Enter your phone number"
+                      disabled={isSubmitting}
+                    />
                   </div>
                   
                   <div>
                     <label className="text-sm font-medium text-foreground mb-2 block">
                       Subject *
                     </label>
-                    <Input placeholder="What is your message about?" />
+                    <Input
+                      name="subject"
+                      value={formData.subject}
+                      onChange={handleInputChange}
+                      placeholder="What is your message about?"
+                      required
+                      disabled={isSubmitting}
+                    />
                   </div>
                   
                   <div>
                     <label className="text-sm font-medium text-foreground mb-2 block">
                       Message *
                     </label>
-                    <Textarea 
+                    <Textarea
+                      name="message"
+                      value={formData.message}
+                      onChange={handleInputChange}
                       placeholder="Please share your message, questions, or feedback..."
                       rows={5}
+                      required
+                      disabled={isSubmitting}
                     />
                   </div>
                   
-                  <Button className="mosque-button w-full">
-                    Send Message
+                  <Button
+                    type="submit"
+                    className="mosque-button w-full"
+                    disabled={isSubmitting}
+                  >
+                    {isSubmitting ? 'Sending...' : 'Send Message'}
                   </Button>
                   
                   <p className="text-xs text-muted-foreground text-center">
                     We typically respond within 24 hours during business days.
                   </p>
                 </form>
-              </CardContent>
-            </Card>
-
-            {/* Map Placeholder */}
-            <Card className="prayer-time-card">
-              <CardHeader>
-                <CardTitle className="text-xl text-primary">Find Us</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <div className="bg-muted rounded-lg h-64 flex items-center justify-center mb-4">
-                  <div className="text-center">
-                    <MapPin className="w-12 h-12 text-primary mx-auto mb-2" />
-                    <p className="text-muted-foreground">Interactive Map</p>
-                    <p className="text-sm text-muted-foreground">
-                      123 Bath Road, Cheltenham GL50 1AB
-                    </p>
-                  </div>
-                </div>
-                <div className="flex flex-col sm:flex-row gap-3">
-                  <Button className="mosque-button flex-1">
-                    Get Directions
-                  </Button>
-                  <Button variant="outline" className="flex-1">
-                    View on Google Maps
-                  </Button>
-                </div>
               </CardContent>
             </Card>
           </div>
