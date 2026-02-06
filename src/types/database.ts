@@ -14,6 +14,33 @@ export type Database = {
   }
   public: {
     Tables: {
+      announcements: {
+        Row: {
+          content: string
+          created_at: string | null
+          date: string | null
+          id: string
+          title: string
+          urgent: boolean | null
+        }
+        Insert: {
+          content: string
+          created_at?: string | null
+          date?: string | null
+          id?: string
+          title: string
+          urgent?: boolean | null
+        }
+        Update: {
+          content?: string
+          created_at?: string | null
+          date?: string | null
+          id?: string
+          title?: string
+          urgent?: boolean | null
+        }
+        Relationships: []
+      }
       contact_messages: {
         Row: {
           created_at: string | null
