@@ -20,13 +20,12 @@ const HeroSection = () => {
       {/* Content */}
       <div className="relative z-10 container mx-auto px-2 sm:px-4 text-center text-white">
         <div className="max-w-4xl mx-auto pt-24 sm:pt-20">
-          {/* Arabic Greeting */}
-          <p className="font-arabic text-lg sm:text-xl md:text-2xl mb-4 opacity-90">
-            أهلاً وسهلاً بكم في مسجد المدينة
-          </p>
+        <p dir="rtl" lang="ar" className="font-arabic text-4xl sm:text-5xl md:text-6xl lg:text-7xl mb-6 opacity-90 leading-none">
+          ﷽
+        </p>
 
           {/* Main Heading */}
-          <h1 className="text-3xl sm:text-4xl md:text-6xl lg:text-7xl font-bold mb-6 leading-tight">
+          <h1 className="text-2xl sm:text-4xl md:text-6xl lg:text-6xl font-bold mb-6 leading-tight">
             Welcome to{' '}
             <span className="bg-gradient-to-r from-gold to-gold-light bg-clip-text text-transparent">
               Masjid Al-Medina
@@ -41,13 +40,24 @@ const HeroSection = () => {
 
           {/* Location and Community Stats */}
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-6 mb-8 sm:mb-10">
-            <div className="flex items-center space-x-2 bg-white/10 backdrop-blur-sm rounded-full px-3 py-2 sm:px-4">
+            <a
+              href="https://maps.app.goo.gl/C1fZbZW7s8k266Bg9"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center space-x-2 bg-white/10 backdrop-blur-sm rounded-full px-3 py-2 sm:px-4 hover:bg-white/20 transition"
+              aria-label="Open Masjid Al-Medina location on Google Maps"
+            >
               <MapPin className="w-5 h-5 text-gold" />
-              <span className="text-xs sm:text-sm font-medium">Cheltenham, Gloucestershire</span>
-            </div>
+              <span className="text-xs sm:text-sm font-medium">
+                Cheltenham, Gloucestershire
+              </span>
+            </a>
+
             <div className="flex items-center space-x-2 bg-white/10 backdrop-blur-sm rounded-full px-3 py-2 sm:px-4 mt-2 sm:mt-0">
               <Users className="w-5 h-5 text-gold" />
-              <span className="text-xs sm:text-sm font-medium">Serving 500+ Families</span>
+              <span className="text-xs sm:text-sm font-medium">
+                Serving 500+ Families
+              </span>
             </div>
           </div>
 

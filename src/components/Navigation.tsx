@@ -1,17 +1,24 @@
 import { useState } from 'react';
-import { Menu, X, Heart, Clock, Calendar, Phone, Info, Users } from 'lucide-react';
+import { Menu, X, Heart, Clock, Calendar1, Phone, Info, Users, Home } from 'lucide-react';
+import MosqueIcon from '@/components/ui/MosqueIcon';
 import { Button } from '@/components/ui/button';
+import SalahIcon from '@/components/ui/salah-stroke-rounded';
+import Mosque02Icon from './ui/mosque-02-stroke-rounded';
+import Calendar01Icon from './ui/calendar-01-stroke-rounded';
+import InformationCircleIcon from './ui/information-circle-stroke-rounded';
+import UserMultiple02Icon from './ui/user-multiple-02-stroke-rounded';
+import Call02Icon from './ui/contact';
 
 const Navigation = () => {
   const [isOpen, setIsOpen] = useState(false);
 
   const navItems = [
-    { name: 'Home', href: '#home', icon: <div className="w-4 h-4 rounded-full bg-primary" /> },
-    { name: 'Prayer Times', href: '#prayer-times', icon: <Clock className="w-4 h-4" /> },
-    { name: 'Events', href: '#events', icon: <Calendar className="w-4 h-4" /> },
-    { name: 'About', href: '#about', icon: <Info className="w-4 h-4" /> },
-    { name: 'Services', href: '#services', icon: <Users className="w-4 h-4" /> },
-    { name: 'Contact', href: '#contact', icon: <Phone className="w-4 h-4" /> },
+    { name: 'Home', href: '#home', icon: <Mosque02Icon className="w-5 h-5" /> },
+    { name: 'Prayer Times', href: '#prayer-times', icon: <SalahIcon className="w-5 h-5" /> },
+    { name: 'Events', href: '#events', icon: <Calendar01Icon className="w-5 h-5" /> },
+    { name: 'About', href: '#about', icon: <InformationCircleIcon className="w-5 h-5" /> },
+    { name: 'Services', href: '#services', icon: <UserMultiple02Icon className="w-5 h-5" /> },
+    { name: 'Contact', href: '#contact', icon: <Call02Icon className="w-5 h-5" /> },
   ];
 
   return (
@@ -21,15 +28,21 @@ const Navigation = () => {
           {/* Logo */}
           <div className="flex items-center space-x-3">
             <div className="w-10 h-10 bg-gradient-primary rounded-full flex items-center justify-center">
-              <div className="w-6 h-6 bg-gold rounded-sm rotate-45 flex items-center justify-center">
-                <div className="w-3 h-3 bg-primary-foreground rounded-full"></div>
+              <div className="w-7 h-7 bg-gold rounded-sm flex items-center justify-center">
+                <MosqueIcon
+                  size={18}
+                  color="hsl(var(--primary-foreground))"
+                  strokeWidth={0}
+                />
               </div>
             </div>
+
             <div>
               <h1 className="font-bold text-lg text-primary">Masjid Al-Medina</h1>
               <p className="text-xs text-muted-foreground">Cheltenham</p>
             </div>
           </div>
+
 
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center space-x-1">
@@ -37,7 +50,7 @@ const Navigation = () => {
               <a
                 key={item.name}
                 href={item.href}
-                className="flex items-center space-x-2 px-3 py-2 rounded-lg text-sm font-medium text-foreground hover:bg-accent hover:text-accent-foreground transition-all duration-200"
+                className="flex items-center space-x-2 px-3 py-2 rounded-lg text-base font-medium text-foreground hover:bg-accent hover:text-accent-foreground transition-all duration-200"
               >
                 {item.icon}
                 <span>{item.name}</span>
@@ -70,7 +83,7 @@ const Navigation = () => {
                 key={item.name}
                 href={item.href}
                 onClick={() => setIsOpen(false)}
-                className="flex items-center space-x-3 px-3 py-3 rounded-lg text-sm font-medium text-foreground hover:bg-accent hover:text-accent-foreground transition-all duration-200"
+                className="flex items-center space-x-3 px-3 py-3 rounded-lg text-base font-medium text-foreground hover:bg-accent hover:text-accent-foreground transition-all duration-200"
               >
                 {item.icon}
                 <span>{item.name}</span>
