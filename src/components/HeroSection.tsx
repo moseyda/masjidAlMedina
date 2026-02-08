@@ -1,11 +1,12 @@
 import { ArrowRight, MapPin, Users, Heart } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { usePrayerTimes } from '@/hooks/usePrayerTimes'; // <-- Add this import
+import { usePrayerTimes } from '@/hooks/usePrayerTimes'; 
 
 const HeroSection = () => {
 
-    const { prayerData, loading } = usePrayerTimes(); // <-- Use the hook
-
+    const { prayerData, loading } = usePrayerTimes(); 
+    
+    console.log('Prayer Data:', prayerData, 'Loading:', loading);
 
   return (
     <section

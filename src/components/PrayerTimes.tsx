@@ -1,103 +1,9 @@
-import { useEffect, useState } from 'react';
 import { Clock, MapPin, Calendar } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-
-interface PrayerTime {
-  name: string;
-  time: string;
-  arabic: string;
-}
-
-interface PrayerData {
-  date: string;
-  hijriDate: string;
-  prayers: PrayerTime[];
-  location: string;
-}
+import { usePrayerTimes } from '@/hooks/usePrayerTimes';
 
 const PrayerTimes = () => {
-  const [prayerData, setPrayerData] = useState<PrayerData | null>(null);
-  const [loading, setLoading] = useState(true);
-  const [currentPrayer, setCurrentPrayer] = useState<string>('');
-
-  // Fetch prayer times from AlAdhan API
-  useEffect(() => {
-    const fetchPrayerTimes = async () => {
-      try {
-        // Cheltenham coordinates
-        const lat = 51.8993;
-        const lng = -2.0783;
-        
-        const response = await fetch(
-          `https://api.aladhan.com/v1/timings?latitude=${lat}&longitude=${lng}&method=2`
-        );
-        
-        if (!response.ok) {
-          throw new Error('Failed to fetch prayer times');
-        }
-
-        const data = await response.json();
-        const timings = data.data.timings;
-        const date = data.data.date;
-
-        const prayers: PrayerTime[] = [
-          { name: 'Fajr', time: timings.Fajr, arabic: 'الفجر' },
-          { name: 'Dhuhr', time: timings.Dhuhr, arabic: 'الظهر' },
-          { name: 'Asr', time: timings.Asr, arabic: 'العصر' },
-          { name: 'Maghrib', time: timings.Maghrib, arabic: 'المغرب' },
-          { name: 'Isha', time: timings.Isha, arabic: 'العشاء' },
-        ];
-
-        setPrayerData({
-          date: date.readable,
-          hijriDate: `${date.hijri.day} ${date.hijri.month.en} ${date.hijri.year}`,
-          prayers,
-          location: 'Cheltenham, UK',
-        });
-
-        // Determine current/next prayer
-        const now = new Date();
-        const currentTime = now.getHours() * 60 + now.getMinutes();
-        
-        let nextPrayer = 'Fajr';
-        for (const prayer of prayers) {
-          const [hours, minutes] = prayer.time.split(':').map(Number);
-          const prayerTime = hours * 60 + minutes;
-          
-          if (currentTime < prayerTime) {
-            nextPrayer = prayer.name;
-            break;
-          }
-        }
-        setCurrentPrayer(nextPrayer);
-        
-      } catch (error) {
-        console.error('Error fetching prayer times:', error);
-        // Fallback data
-        setPrayerData({
-          date: new Date().toLocaleDateString('en-GB', { 
-            weekday: 'long', 
-            year: 'numeric', 
-            month: 'long', 
-            day: 'numeric' 
-          }),
-          hijriDate: 'Loading...',
-          prayers: [
-            { name: 'Fajr', time: '05:30', arabic: 'الفجر' },
-            { name: 'Dhuhr', time: '12:30', arabic: 'الظهر' },
-            { name: 'Asr', time: '15:45', arabic: 'العصر' },
-            { name: 'Maghrib', time: '18:20', arabic: 'المغرب' },
-            { name: 'Isha', time: '19:45', arabic: 'العشاء' },
-          ],
-          location: 'Cheltenham, UK',
-        });
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchPrayerTimes();
-  }, []);
+  const { prayerData, loading } = usePrayerTimes();
 
   if (loading) {
     return (
@@ -138,7 +44,7 @@ const PrayerTimes = () => {
                   <p className="text-sm text-muted-foreground font-arabic">أوقات الصلاة</p>
                 </div>
               </div>
-              
+
               <div className="text-right">
                 <div className="flex items-center space-x-2 text-sm text-muted-foreground mb-1">
                   <Calendar className="w-4 h-4" />
@@ -152,14 +58,14 @@ const PrayerTimes = () => {
               </div>
             </CardTitle>
           </CardHeader>
-          
+
           <CardContent>
             <div className="grid grid-cols-2 md:grid-cols-5 gap-4">
               {prayerData.prayers.map((prayer) => (
                 <div
                   key={prayer.name}
                   className={`text-center p-4 rounded-lg transition-all duration-300 ${
-                    currentPrayer === prayer.name
+                    prayerData.nextPrayer?.name === prayer.name
                       ? 'bg-gradient-primary text-primary-foreground shadow-elegant scale-105'
                       : 'bg-accent hover:bg-accent/80'
                   }`}
@@ -167,13 +73,13 @@ const PrayerTimes = () => {
                   <p className="font-arabic text-lg mb-1 opacity-80">{prayer.arabic}</p>
                   <p className="font-semibold text-sm mb-2">{prayer.name}</p>
                   <p className="text-xl font-bold font-mono">{prayer.time}</p>
-                  {currentPrayer === prayer.name && (
+                  {prayerData.nextPrayer?.name === prayer.name && (
                     <p className="text-xs mt-2 opacity-90">Next Prayer</p>
                   )}
                 </div>
               ))}
             </div>
-            
+
             <div className="mt-6 text-center">
               <p className="text-sm text-muted-foreground">
                 <strong>Jummah (Friday Prayer):</strong> 1st congregation at 1:15 PM, 2nd at 2:15 PM
