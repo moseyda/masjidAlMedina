@@ -1,6 +1,7 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import { AuthProvider } from '@/context/AuthContext'
 import { Toaster } from '@/components/ui/toaster'
+import CookieConsent from "@/components/CookieConsent";
 import Index from '@/pages/Index'
 import AdminLogin from '@/pages/AdminLogin'
 import AdminDashboard from '@/pages/AdminDashboard'
@@ -17,6 +18,7 @@ function App() {
           <Route path="*" element={<NotFound />} />
         </Routes>
         <Toaster />
+        <CookieConsent />
       </BrowserRouter>
     </AuthProvider>
   )
