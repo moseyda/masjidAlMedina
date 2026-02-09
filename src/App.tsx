@@ -6,6 +6,7 @@ import Index from '@/pages/Index'
 import AdminLogin from '@/pages/AdminLogin'
 import AdminDashboard from '@/pages/AdminDashboard'
 import NotFound from '@/pages/NotFound'
+import CookieSettingsButton from './components/CookieSettingsButton';
 
 function App() {
   return (
@@ -18,7 +19,8 @@ function App() {
           <Route path="*" element={<NotFound />} />
         </Routes>
         <Toaster />
-        <CookieConsent />
+      <CookieConsent />
+      <CookieSettingsButton />
       </BrowserRouter>
     </AuthProvider>
   )

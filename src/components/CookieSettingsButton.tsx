@@ -14,9 +14,14 @@ import {
   CookieCategory,
   CookiePreferences,
   COOKIE_DESCRIPTIONS,
-  DEFAULT_PREFERENCES,
 } from "@/types/CookieCategory";
 import { Shield, BarChart3, Megaphone, Settings2, Cookie } from "lucide-react";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "./ui/tooltip";
 
 const CATEGORY_ICONS: Record<CookieCategory, React.ReactNode> = {
   essential: <Shield className="h-5 w-5 text-green-600" />,
@@ -24,81 +29,55 @@ const CATEGORY_ICONS: Record<CookieCategory, React.ReactNode> = {
   marketing: <Megaphone className="h-5 w-5 text-orange-600" />,
 };
 
-export default function CookieConsent() {
-  const {
-    hasResponded,
-    isLoaded,
-    acceptAll,
-    declineAll,
-    savePreferences,
-  } = useCookieConsent();
+export default function CookieSettingsButton() {
+  const { preferences, hasResponded, isLoaded, savePreferences } =
+    useCookieConsent();
 
   const [showPreferences, setShowPreferences] = useState(false);
-  const [tempPrefs, setTempPrefs] = useState<CookiePreferences>(DEFAULT_PREFERENCES);
+  const [tempPrefs, setTempPrefs] = useState<CookiePreferences>(preferences);
 
-  if (!isLoaded || hasResponded) return null;
+  // Only show after user has already responded
+  if (!isLoaded || !hasResponded) return null;
 
-  const handleOpenPreferences = () => {
-    setTempPrefs({ ...DEFAULT_PREFERENCES });
+  const handleOpen = () => {
+    setTempPrefs({ ...preferences });
     setShowPreferences(true);
   };
 
   const handleToggleCategory = (category: CookieCategory) => {
-    if (category === "essential") return; // cannot toggle essential
+    if (category === "essential") return;
     setTempPrefs((prev) => ({
       ...prev,
       [category]: !prev[category],
     }));
   };
 
-  const handleSavePreferences = () => {
+  const handleSave = () => {
     savePreferences(tempPrefs);
     setShowPreferences(false);
   };
 
   return (
     <>
-      {/* Banner */}
-      <div className="fixed bottom-0 left-0 right-0 z-50 animate-in slide-in-from-bottom duration-500">
-        <div className="bg-white dark:bg-gray-900 border-t border-gray-200 dark:border-gray-700 shadow-2xl">
-          <div className="max-w-7xl mx-auto p-4 md:p-6">
-            <div className="flex items-start gap-4">
-              <div className="hidden sm:flex shrink-0 mt-1">
-                <Cookie className="h-8 w-8 text-primary" />
-              </div>
-              <div className="flex-1">
-                <h3 className="text-base font-semibold text-gray-900 dark:text-white mb-1">
-                  We value your privacy
-                </h3>
-                <p className="text-sm text-gray-600 dark:text-gray-400 mb-4">
-                  We use cookies to enhance your browsing experience, serve
-                  personalised content, and analyse our traffic. You can choose
-                  which categories of cookies you'd like to allow.
-                </p>
-                <div className="flex flex-col sm:flex-row gap-3">
-                  <Button size="sm" onClick={acceptAll}>
-                    Accept All
-                  </Button>
-                  <Button size="sm" variant="outline" onClick={declineAll}>
-                    Essential Only
-                  </Button>
-                  <Button
-                    size="sm"
-                    variant="ghost"
-                    onClick={handleOpenPreferences}
-                    className="gap-2"
-                  >
-                    <Settings2 className="h-4 w-4" />
-                    Manage Preferences
-                  </Button>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
+      <TooltipProvider>
+        <Tooltip>
+          <TooltipTrigger asChild>
+            <Button
+              variant="outline"
+              size="icon"
+              className="fixed bottom-4 left-4 z-40 h-10 w-10 rounded-full shadow-lg bg-white dark:bg-gray-900 border-gray-300"
+              onClick={handleOpen}
+              aria-label="Cookie settings"
+            >
+              <Cookie className="h-5 w-5" />
+            </Button>
+          </TooltipTrigger>
+          <TooltipContent side="right">
+            <p>Cookie Settings</p>
+          </TooltipContent>
+        </Tooltip>
+      </TooltipProvider>
 
-      {/* Preferences Modal */}
       <Dialog open={showPreferences} onOpenChange={setShowPreferences}>
         <DialogContent className="sm:max-w-lg max-h-[85vh] overflow-y-auto">
           <DialogHeader>
@@ -107,9 +86,8 @@ export default function CookieConsent() {
               Cookie Preferences
             </DialogTitle>
             <DialogDescription>
-              Choose which categories of cookies you'd like to accept. Essential
-              cookies are always enabled as they are necessary for the website to
-              function.
+              Update your cookie preferences at any time. Essential cookies
+              cannot be disabled.
             </DialogDescription>
           </DialogHeader>
 
@@ -160,10 +138,7 @@ export default function CookieConsent() {
             >
               Cancel
             </Button>
-            <Button
-              onClick={handleSavePreferences}
-              className="w-full sm:w-auto"
-            >
+            <Button onClick={handleSave} className="w-full sm:w-auto">
               Save Preferences
             </Button>
           </DialogFooter>
