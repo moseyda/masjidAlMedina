@@ -38,7 +38,7 @@ const Navigation = () => {
             </div>
 
             <div>
-              <h1 className="font-bold text-lg text-primary">Masjid Al-Medina</h1>
+              <h1 className="font-bold text-lg text-primary">Masjid Al-Madina</h1>
               <p className="text-xs text-muted-foreground">Cheltenham</p>
             </div>
           </div>

@@ -44,7 +44,7 @@ const AdminDashboard = () => {
         <div className="container mx-auto flex items-center justify-between">
           <div>
             <h1 className="text-2xl font-bold">Admin Dashboard</h1>
-            <p className="text-sm opacity-80">Masjid Al Medina</p>
+            <p className="text-sm opacity-80">Masjid Al Madina</p>
           </div>
           <div className="flex items-center gap-4">
             <span className="text-sm">{user.email}</span>

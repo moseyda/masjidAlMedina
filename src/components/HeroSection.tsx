@@ -6,7 +6,6 @@ const HeroSection = () => {
 
     const { prayerData, loading } = usePrayerTimes(); 
     
-    console.log('Prayer Data:', prayerData, 'Loading:', loading);
 
   return (
     <section
@@ -29,7 +28,7 @@ const HeroSection = () => {
           <h1 className="text-2xl sm:text-4xl md:text-6xl lg:text-6xl font-bold mb-6 leading-tight">
             Welcome to{' '}
             <span className="bg-gradient-to-r from-gold to-gold-light bg-clip-text text-transparent">
-              Masjid Al-Medina
+              Masjid Al-Madina
             </span>
           </h1>
 
@@ -46,7 +45,7 @@ const HeroSection = () => {
               target="_blank"
               rel="noopener noreferrer"
               className="flex items-center space-x-2 bg-white/10 backdrop-blur-sm rounded-full px-3 py-2 sm:px-4 hover:bg-white/20 transition"
-              aria-label="Open Masjid Al-Medina location on Google Maps"
+              aria-label="Open Masjid Al-Madina location on Google Maps"
             >
               <MapPin className="w-5 h-5 text-gold" />
               <span className="text-xs sm:text-sm font-medium">

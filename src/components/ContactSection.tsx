@@ -75,7 +75,7 @@ const ContactSection = () => {
     {
       icon: <Mail className="w-5 h-5" />,
       title: "Email",
-      details: ["info@masjidalmedina.org.uk", "imam@masjidalmedina.org.uk"],
+      details: ["info@masjidalmadina.org.uk", "imam@masjidalmadina.org.uk"],
       action: "Email Us"
     },
     {

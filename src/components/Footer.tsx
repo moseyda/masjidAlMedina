@@ -45,7 +45,7 @@ const Footer = () => {
                 </div>
               </div>
               <div>
-                <h3 className="font-bold text-lg">Masjid Al-Medina</h3>
+                <h3 className="font-bold text-lg">Masjid Al-Madina</h3>
                 <p className="text-sm opacity-80">Cheltenham</p>
               </div>
             </div>
@@ -66,7 +66,7 @@ const Footer = () => {
               </div>
               <div className="flex items-center space-x-2 text-sm">
                 <Mail className="w-4 h-4 opacity-80" />
-                <span>info@masjidalmedina.org.uk</span>
+                <span>info@masjidalmadina.org.uk</span>
               </div>
             </div>
           </div>
@@ -164,7 +164,7 @@ const Footer = () => {
         <div className="container mx-auto px-4 py-6">
           <div className="flex flex-col md:flex-row items-center justify-between gap-4">
             <div className="text-sm opacity-80">
-              © {currentYear} Masjid Al-Medina. All rights reserved.
+              © {currentYear} Masjid Al-Madina. All rights reserved.
             </div>
             
             <div className="flex items-center space-x-2 text-sm">

@@ -47,11 +47,11 @@ const AboutSection = () => {
         {/* Header */}
         <div className="text-center mb-12">
           <h2 className="text-3xl md:text-4xl font-bold text-primary mb-4">
-            About Masjid Al-Medina
+            About Masjid Al-Madina
           </h2>
           <p className="font-arabic text-lg text-gold mb-4">عن مسجد المدينة</p>
           <p className="text-lg text-muted-foreground max-w-3xl mx-auto leading-relaxed">
-            Established in 1995, Masjid Al-Medina has been serving the Muslim community of Cheltenham 
+            Established in 1995, Masjid Al-Madina has been serving the Muslim community of Cheltenham 
             and surrounding areas for over 25 years. We are committed to providing a welcoming space for 
             worship, education, and community building.
           </p>

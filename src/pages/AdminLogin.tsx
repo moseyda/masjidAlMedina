@@ -45,7 +45,7 @@ const AdminLogin = () => {
             <Lock className="w-8 h-8 text-primary-foreground" />
           </div>
           <CardTitle className="text-2xl">Admin Login</CardTitle>
-          <p className="text-muted-foreground">Masjid Al Medina Dashboard</p>
+          <p className="text-muted-foreground">Masjid Al Madina Dashboard</p>
         </CardHeader>
         <CardContent>
           <form onSubmit={handleSubmit} className="space-y-4">
@@ -55,7 +55,7 @@ const AdminLogin = () => {
                 type="email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                placeholder="admin@masjidalmedina.org.uk"
+                placeholder="admin@masjidalmadina.org.uk"
                 required
                 disabled={isLoading}
               />
