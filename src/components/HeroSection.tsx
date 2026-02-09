@@ -1,10 +1,14 @@
+import { useState } from 'react';
 import { ArrowRight, MapPin, Users, Heart } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { usePrayerTimes } from '@/hooks/usePrayerTimes'; 
+import { usePrayerTimes } from '@/hooks/usePrayerTimes';
+import MonthlyPrayerTimesModal from './MonthlyPrayerTimesModal';
 
 const HeroSection = () => {
 
     const { prayerData, loading } = usePrayerTimes(); 
+    const [showMonthly, setShowMonthly] = useState(false);
+
     
 
   return (
@@ -65,6 +69,7 @@ const HeroSection = () => {
           <div className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4">
             <Button
               size="lg"
+              onClick={() => setShowMonthly(true)}
               className="w-full sm:w-auto bg-white text-primary hover:bg-white/90 shadow-elegant transition-all duration-300 hover:scale-105 font-semibold px-8 py-3"
             >
               View Prayer Times
@@ -101,6 +106,11 @@ const HeroSection = () => {
           </div>
         </div>
       </div>
+
+      <MonthlyPrayerTimesModal 
+        isOpen={showMonthly} 
+        onClose={() => setShowMonthly(false)} 
+      />
     </section>
   );
 };

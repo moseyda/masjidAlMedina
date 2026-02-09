@@ -74,7 +74,7 @@ export const usePrayerTimes = () => {
         const lng = -2.0783;
 
         const response = await fetch(
-          `https://api.aladhan.com/v1/timings?latitude=${lat}&longitude=${lng}&method=2`
+          `https://api.aladhan.com/v1/timings?latitude=${lat}&longitude=${lng}&method=15`
         );
 
         if (!response.ok) throw new Error('Failed to fetch');

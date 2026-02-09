@@ -28,3 +28,14 @@ export async function getPrayerTimesForDate(date: string): Promise<PrayerTime | 
   if (error && error.code !== 'PGRST116') throw error
   return data
 }
+
+export async function getMonthlyPrayerTimes(year: number, month: number) {
+  const response = await fetch(
+    `https://api.aladhan.com/v1/calendarByCity/${year}/${month}?city=Cheltenham&country=UK&method=15`
+  );
+  
+  if (!response.ok) throw new Error('Failed to fetch monthly prayer times');
+  
+  const data = await response.json();
+  return data.data;
+}

@@ -1,10 +1,14 @@
+import { useState } from 'react';
 import { Clock, MapPin, Calendar } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { usePrayerTimes } from '@/hooks/usePrayerTimes';
+import { Button } from './ui/button';
+import MonthlyPrayerTimesModal from './MonthlyPrayerTimesModal';
+
 
 const PrayerTimes = () => {
   const { prayerData, loading } = usePrayerTimes();
-
+  const [showMonthly, setShowMonthly] = useState(false);
   if (loading) {
     return (
       <div className="animate-pulse">
@@ -84,10 +88,22 @@ const PrayerTimes = () => {
               <p className="text-sm text-muted-foreground">
                 <strong>Jummah (Friday Prayer):</strong> 1st congregation at 1:15 PM, 2nd at 2:15 PM
               </p>
+              <Button 
+                variant="outline" 
+                onClick={() => setShowMonthly(true)}
+                className="mt-2"
+              >
+                <Calendar className="w-4 h-4 mr-2" />
+                View Monthly Prayer Times
+              </Button>
             </div>
           </CardContent>
         </Card>
       </div>
+      <MonthlyPrayerTimesModal 
+        isOpen={showMonthly} 
+        onClose={() => setShowMonthly(false)} 
+      />
     </section>
   );
 };
