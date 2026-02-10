@@ -1,14 +1,14 @@
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useAuth } from '@/context/AuthContext'
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
-import { Calendar, MessageSquare, Clock, LogOut, Plus } from 'lucide-react'
+import { LogOut, Calendar, Megaphone, Clock, FileText } from 'lucide-react'
 import EventsManager from '@/components/admin/EventsManager'
 import AnnouncementsManager from '@/components/admin/AnnouncementsManager'
 import PrayerTimesManager from '@/components/admin/PrayerTimesManager'
-import ContactMessagesManager from '@/components/admin/ContactMessagesManager'
+import EventProposalsManager from '@/components/admin/EventProposalsManager'
 
 const AdminDashboard = () => {
   const { user, signOut, loading } = useAuth()
@@ -28,27 +28,25 @@ const AdminDashboard = () => {
   if (loading) {
     return (
       <div className="min-h-screen flex items-center justify-center">
-        <p>Loading...</p>
+        <div className="animate-spin w-8 h-8 border-4 border-primary border-t-transparent rounded-full"></div>
       </div>
     )
   }
 
-  if (!user) {
-    return null
-  }
+  if (!user) return null
 
   return (
     <div className="min-h-screen bg-muted/30">
       {/* Header */}
-      <header className="bg-primary text-primary-foreground py-4 px-6">
-        <div className="container mx-auto flex items-center justify-between">
+      <header className="bg-background border-b sticky top-0 z-10">
+        <div className="container mx-auto px-4 py-4 flex items-center justify-between">
           <div>
-            <h1 className="text-2xl font-bold">Admin Dashboard</h1>
-            <p className="text-sm opacity-80">Masjid Al Madina</p>
+            <h1 className="text-2xl font-bold text-primary">Admin Dashboard</h1>
+            <p className="text-sm text-muted-foreground">Masjid Al-Madina</p>
           </div>
           <div className="flex items-center gap-4">
-            <span className="text-sm">{user.email}</span>
-            <Button variant="secondary" size="sm" onClick={handleSignOut}>
+            <span className="text-sm text-muted-foreground">{user.email}</span>
+            <Button variant="outline" size="sm" onClick={handleSignOut}>
               <LogOut className="w-4 h-4 mr-2" />
               Sign Out
             </Button>
@@ -57,41 +55,69 @@ const AdminDashboard = () => {
       </header>
 
       {/* Main Content */}
-      <main className="container mx-auto py-8 px-4">
-        <Tabs defaultValue="events" className="space-y-6">
+      <main className="container mx-auto px-4 py-8">
+        <Tabs defaultValue="proposals" className="space-y-6">
           <TabsList className="grid grid-cols-4 w-full max-w-2xl">
+            <TabsTrigger value="proposals" className="flex items-center gap-2">
+              <FileText className="w-4 h-4" />
+              <span className="hidden sm:inline">Proposals</span>
+            </TabsTrigger>
             <TabsTrigger value="events" className="flex items-center gap-2">
               <Calendar className="w-4 h-4" />
-              Events
+              <span className="hidden sm:inline">Events</span>
             </TabsTrigger>
             <TabsTrigger value="announcements" className="flex items-center gap-2">
-              <MessageSquare className="w-4 h-4" />
-              Announcements
+              <Megaphone className="w-4 h-4" />
+              <span className="hidden sm:inline">Announcements</span>
             </TabsTrigger>
             <TabsTrigger value="prayer-times" className="flex items-center gap-2">
               <Clock className="w-4 h-4" />
-              Prayer Times
-            </TabsTrigger>
-            <TabsTrigger value="messages" className="flex items-center gap-2">
-              <MessageSquare className="w-4 h-4" />
-              Messages
+              <span className="hidden sm:inline">Prayer Times</span>
             </TabsTrigger>
           </TabsList>
 
+          <TabsContent value="proposals">
+            <Card>
+              <CardHeader>
+                <CardTitle>Event Proposals</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <EventProposalsManager />
+              </CardContent>
+            </Card>
+          </TabsContent>
+
           <TabsContent value="events">
-            <EventsManager />
+            <Card>
+              <CardHeader>
+                <CardTitle>Manage Events</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <EventsManager />
+              </CardContent>
+            </Card>
           </TabsContent>
 
           <TabsContent value="announcements">
-            <AnnouncementsManager />
+            <Card>
+              <CardHeader>
+                <CardTitle>Manage Announcements</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <AnnouncementsManager />
+              </CardContent>
+            </Card>
           </TabsContent>
 
           <TabsContent value="prayer-times">
-            <PrayerTimesManager />
-          </TabsContent>
-
-          <TabsContent value="messages">
-            <ContactMessagesManager />
+            <Card>
+              <CardHeader>
+                <CardTitle>Manage Prayer Times</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <PrayerTimesManager />
+              </CardContent>
+            </Card>
           </TabsContent>
         </Tabs>
       </main>

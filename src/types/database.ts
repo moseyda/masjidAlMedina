@@ -71,6 +71,54 @@ export type Database = {
         }
         Relationships: []
       }
+      event_proposals: {
+        Row: {
+          arabic: string | null
+          category: string | null
+          created_at: string | null
+          date: string
+          description: string | null
+          id: string
+          location: string | null
+          proposer_email: string
+          proposer_name: string
+          proposer_phone: string | null
+          status: string | null
+          time: string
+          title: string
+        }
+        Insert: {
+          arabic?: string | null
+          category?: string | null
+          created_at?: string | null
+          date: string
+          description?: string | null
+          id?: string
+          location?: string | null
+          proposer_email: string
+          proposer_name: string
+          proposer_phone?: string | null
+          status?: string | null
+          time: string
+          title: string
+        }
+        Update: {
+          arabic?: string | null
+          category?: string | null
+          created_at?: string | null
+          date?: string
+          description?: string | null
+          id?: string
+          location?: string | null
+          proposer_email?: string
+          proposer_name?: string
+          proposer_phone?: string | null
+          status?: string | null
+          time?: string
+          title?: string
+        }
+        Relationships: []
+      }
       events: {
         Row: {
           arabic: string | null

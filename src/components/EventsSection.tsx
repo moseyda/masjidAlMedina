@@ -5,12 +5,14 @@ import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { getEvents, Event } from '@/services/events';
 import { getAnnouncements, subscribeToAnnouncements, Announcement } from '@/services/announcements';
+import EventProposalModal from './EventProposalModal';
 
 const EventsSection = () => {
   const [upcomingEvents, setUpcomingEvents] = useState<Event[]>([]);
   const [announcements, setAnnouncements] = useState<Announcement[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [showProposalModal, setShowProposalModal] = useState(false);
 
   useEffect(() => {
     async function fetchData() {
@@ -31,7 +33,6 @@ const EventsSection = () => {
 
     fetchData();
 
-    // Subscribe to real-time updates
     const unsubscribe = subscribeToAnnouncements(setAnnouncements);
     return () => unsubscribe();
   }, []);
@@ -148,7 +149,7 @@ const EventsSection = () => {
             </div>
           </div>
 
-          {/* Announcements - Now Dynamic */}
+          {/* Announcements */}
           <div>
             <h3 className="text-2xl font-bold text-primary mb-6">
               Announcements
@@ -191,7 +192,10 @@ const EventsSection = () => {
                 <CardTitle className="text-lg text-primary">Quick Actions</CardTitle>
               </CardHeader>
               <CardContent className="space-y-3">
-                <Button className="w-full mosque-button">
+                <Button 
+                  className="w-full mosque-button"
+                  onClick={() => setShowProposalModal(true)}
+                >
                   Submit Event Proposal
                 </Button>
                 <Button variant="outline" className="w-full">
@@ -205,6 +209,12 @@ const EventsSection = () => {
           </div>
         </div>
       </div>
+
+      {/* Event Proposal Modal */}
+      <EventProposalModal 
+        isOpen={showProposalModal} 
+        onClose={() => setShowProposalModal(false)} 
+      />
     </section>
   );
 };
