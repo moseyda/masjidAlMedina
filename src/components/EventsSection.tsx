@@ -4,48 +4,37 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { getEvents, Event } from '@/services/events';
+import { getAnnouncements, subscribeToAnnouncements, Announcement } from '@/services/announcements';
 
 const EventsSection = () => {
   const [upcomingEvents, setUpcomingEvents] = useState<Event[]>([]);
+  const [announcements, setAnnouncements] = useState<Announcement[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    async function fetchEvents() {
+    async function fetchData() {
       try {
-        const data = await getEvents();
-        setUpcomingEvents(data);
+        const [eventsData, announcementsData] = await Promise.all([
+          getEvents(),
+          getAnnouncements()
+        ]);
+        setUpcomingEvents(eventsData);
+        setAnnouncements(announcementsData);
       } catch (err) {
-        console.error('Failed to fetch events:', err);
-        setError('Failed to load events');
+        console.error('Failed to fetch data:', err);
+        setError('Failed to load data');
       } finally {
         setLoading(false);
       }
     }
 
-    fetchEvents();
-  }, []);
+    fetchData();
 
-  const announcements = [
-    {
-      title: "Ramadan Schedule 2024",
-      date: "March 10, 2024",
-      content: "Ramadan prayer times and iftar schedule now available. Please check the notice board for detailed timings.",
-      urgent: true
-    },
-    {
-      title: "New Arabic Classes Starting",
-      date: "March 8, 2024",
-      content: "Beginner Arabic classes for adults starting next month. Registration is now open.",
-      urgent: false
-    },
-    {
-      title: "Parking Notice",
-      date: "March 5, 2024",
-      content: "Please be mindful of our neighbours when parking. Use designated areas only.",
-      urgent: false
-    }
-  ];
+    // Subscribe to real-time updates
+    const unsubscribe = subscribeToAnnouncements(setAnnouncements);
+    return () => unsubscribe();
+  }, []);
 
   const formatDate = (dateString: string) => {
     const date = new Date(dateString);
@@ -159,15 +148,23 @@ const EventsSection = () => {
             </div>
           </div>
 
-          {/* Announcements - keep existing code */}
+          {/* Announcements - Now Dynamic */}
           <div>
             <h3 className="text-2xl font-bold text-primary mb-6">
               Announcements
             </h3>
             
+            {loading && (
+              <p className="text-muted-foreground">Loading announcements...</p>
+            )}
+
+            {!loading && announcements.length === 0 && (
+              <p className="text-muted-foreground">No announcements</p>
+            )}
+
             <div className="space-y-4">
-              {announcements.map((announcement, index) => (
-                <Card key={index} className={`prayer-time-card ${announcement.urgent ? 'border-l-4 border-l-red-500' : ''}`}>
+              {announcements.map((announcement) => (
+                <Card key={announcement.id} className={`prayer-time-card ${announcement.urgent ? 'border-l-4 border-l-red-500' : ''}`}>
                   <CardContent className="p-4">
                     <div className="flex items-start justify-between mb-2">
                       <h4 className="font-semibold text-primary">{announcement.title}</h4>
@@ -181,7 +178,7 @@ const EventsSection = () => {
                       {announcement.content}
                     </p>
                     <p className="text-xs text-muted-foreground">
-                      {announcement.date}
+                      {formatDate(announcement.created_at)}
                     </p>
                   </CardContent>
                 </Card>
