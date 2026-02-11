@@ -6,6 +6,7 @@ import { Badge } from '@/components/ui/badge';
 import { getEvents, Event } from '@/services/events';
 import { getAnnouncements, subscribeToAnnouncements, Announcement } from '@/services/announcements';
 import EventProposalModal from './EventProposalModal';
+import EventCalendarModal from './EventCalendarModal';
 
 const EventsSection = () => {
   const [upcomingEvents, setUpcomingEvents] = useState<Event[]>([]);
@@ -13,6 +14,7 @@ const EventsSection = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [showProposalModal, setShowProposalModal] = useState(false);
+  const [showCalendarModal, setShowCalendarModal] = useState(false);
 
   useEffect(() => {
     async function fetchData() {
@@ -198,7 +200,11 @@ const EventsSection = () => {
                 >
                   Submit Event Proposal
                 </Button>
-                <Button variant="outline" className="w-full">
+                <Button 
+                  variant="outline" 
+                  className="w-full"
+                  onClick={() => setShowCalendarModal(true)}
+                >
                   View Event Calendar
                 </Button>
                 <Button variant="outline" className="w-full">
@@ -214,6 +220,12 @@ const EventsSection = () => {
       <EventProposalModal 
         isOpen={showProposalModal} 
         onClose={() => setShowProposalModal(false)} 
+      />
+
+      {/* Event Calendar Modal */}
+      <EventCalendarModal 
+        isOpen={showCalendarModal} 
+        onClose={() => setShowCalendarModal(false)} 
       />
     </section>
   );
