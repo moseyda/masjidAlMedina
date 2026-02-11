@@ -132,19 +132,6 @@ const EventsSection = () => {
                         <span>{event.location}</span>
                       </div>
                     </div>
-                    
-                    <div className="flex items-center justify-between mt-4 pt-4 border-t border-border">
-                      {event.attendees && (
-                        <div className="flex items-center space-x-2 text-sm text-muted-foreground">
-                          <Users className="w-4 h-4" />
-                          <span>{event.attendees} registered</span>
-                        </div>
-                      )}
-                      <Button variant="outline" size="sm" className="group-hover:bg-primary group-hover:text-primary-foreground transition-colors">
-                        Learn More
-                        <ChevronRight className="w-4 h-4 ml-1" />
-                      </Button>
-                    </div>
                   </CardContent>
                 </Card>
               ))}

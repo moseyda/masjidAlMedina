@@ -122,7 +122,6 @@ export type Database = {
       events: {
         Row: {
           arabic: string | null
-          attendees: number | null
           category: string | null
           created_at: string | null
           date: string
@@ -134,7 +133,6 @@ export type Database = {
         }
         Insert: {
           arabic?: string | null
-          attendees?: number | null
           category?: string | null
           created_at?: string | null
           date: string
@@ -146,7 +144,6 @@ export type Database = {
         }
         Update: {
           arabic?: string | null
-          attendees?: number | null
           category?: string | null
           created_at?: string | null
           date?: string
