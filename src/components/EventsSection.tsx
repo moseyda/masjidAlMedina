@@ -135,7 +135,7 @@ const EventsSection = () => {
                   </CardContent>
                 </Card>
               ))}
-            </div> {/*comment*/}
+            </div>
           </div>
 
           {/* Announcements */}
