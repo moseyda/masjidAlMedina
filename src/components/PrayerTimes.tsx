@@ -34,7 +34,7 @@ const PrayerTimes = () => {
   if (!prayerData) return null;
 
   return (
-    <section id="prayer-times" className="py-12 bg-muted/30">
+    <section id="prayer-times" className="py-12 bg-muted/30 select-none">
       <div className="container mx-auto px-4">
         <Card className="prayer-time-card max-w-5xl mx-auto">
           <CardHeader>

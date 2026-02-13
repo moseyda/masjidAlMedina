@@ -1,5 +1,6 @@
 import { useState } from 'react';
-import { Menu, X, Heart, Clock, Calendar1, Phone, Info, Users, Home } from 'lucide-react';
+import { Link } from "react-router-dom";
+import { Menu, X, Heart } from 'lucide-react';
 import MosqueIcon from '@/components/ui/MosqueIcon';
 import { Button } from '@/components/ui/button';
 import SalahIcon from '@/components/ui/salah-stroke-rounded';
@@ -26,7 +27,7 @@ const Navigation = () => {
       <div className="container mx-auto px-4">
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
-          <div className="flex items-center space-x-3">
+          <div onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })} className="flex items-center space-x-3 cursor-pointer">
             <div className="w-10 h-10 bg-gradient-primary rounded-full flex items-center justify-center">
               <div className="w-7 h-7 bg-gold rounded-sm flex items-center justify-center">
                 <MosqueIcon
