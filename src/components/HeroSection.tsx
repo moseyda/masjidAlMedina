@@ -14,7 +14,7 @@ const HeroSection = () => {
   return (
     <section
       id="home"
-      className="relative min-h-screen flex items-center justify-center overflow-hidden"
+      className="relative min-h-screen flex items-center justify-center overflow-hidden select-none"
     >
       {/* Background with Islamic pattern */}
       <div className="absolute inset-0 bg-gradient-hero islamic-pattern">
