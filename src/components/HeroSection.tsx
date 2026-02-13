@@ -3,13 +3,12 @@ import { ArrowRight, MapPin, Users, Heart } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { usePrayerTimes } from '@/hooks/usePrayerTimes';
 import MonthlyPrayerTimesModal from './MonthlyPrayerTimesModal';
+import DonationModal from './DonationModal';
 
 const HeroSection = () => {
-
-    const { prayerData, loading } = usePrayerTimes(); 
-    const [showMonthly, setShowMonthly] = useState(false);
-
-    
+  const { prayerData, loading } = usePrayerTimes(); 
+  const [showMonthly, setShowMonthly] = useState(false);
+  const [showDonationModal, setShowDonationModal] = useState(false);
 
   return (
     <section
@@ -24,9 +23,9 @@ const HeroSection = () => {
       {/* Content */}
       <div className="relative z-10 container mx-auto px-2 sm:px-4 text-center text-white">
         <div className="max-w-4xl mx-auto pt-24 sm:pt-20">
-        <p dir="rtl" lang="ar" className="font-arabic text-4xl sm:text-5xl md:text-6xl lg:text-7xl mb-6 opacity-90 leading-none">
-          ﷽
-        </p>
+          <p dir="rtl" lang="ar" className="font-arabic text-4xl sm:text-5xl md:text-6xl lg:text-7xl mb-6 opacity-90 leading-none">
+            ﷽
+          </p>
 
           {/* Main Heading */}
           <h1 className="text-2xl sm:text-4xl md:text-6xl lg:text-6xl font-bold mb-6 leading-tight">
@@ -78,12 +77,14 @@ const HeroSection = () => {
             <Button
               size="lg"
               variant="outline"
-              className="w-full sm:w-auto bg-white/10 border-white/30 text-white hover:bg-white/10 backdrop-blur-sm shadow-elegant transition-all duration-300 hover:scale-105 font-semibold px-8 py-3 mt-2 sm:mt-0"
+              onClick={() => setShowDonationModal(true)}
+              className="w-full sm:w-auto bg-white/10 border-white/30 text-white hover:bg-white/20 backdrop-blur-sm shadow-elegant transition-all duration-300 hover:scale-105 font-semibold px-8 py-3 mt-2 sm:mt-0"
             >
               <Heart className="w-5 h-5 mr-2" />
               Support Our Community
             </Button>
           </div>
+
           {/* Next Prayer Indicator */}
           <div className="mt-6 sm:mt-8 bg-white/10 backdrop-blur-sm rounded-lg px-4 py-2 max-w-xs sm:max-w-sm mx-auto flex items-center justify-between shadow-elegant border border-white/20">
             <span className="text-xs sm:text-sm opacity-80 mr-2 sm:mr-3 whitespace-nowrap">Next Prayer</span>
@@ -110,6 +111,11 @@ const HeroSection = () => {
       <MonthlyPrayerTimesModal 
         isOpen={showMonthly} 
         onClose={() => setShowMonthly(false)} 
+      />
+
+      <DonationModal 
+        isOpen={showDonationModal} 
+        onClose={() => setShowDonationModal(false)} 
       />
     </section>
   );

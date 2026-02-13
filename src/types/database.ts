@@ -71,6 +71,166 @@ export type Database = {
         }
         Relationships: []
       }
+      donation_receipts: {
+        Row: {
+          created_at: string | null
+          donation_id: string
+          id: string
+          pdf_url: string | null
+          receipt_number: string
+          sent_at: string | null
+        }
+        Insert: {
+          created_at?: string | null
+          donation_id: string
+          id?: string
+          pdf_url?: string | null
+          receipt_number: string
+          sent_at?: string | null
+        }
+        Update: {
+          created_at?: string | null
+          donation_id?: string
+          id?: string
+          pdf_url?: string | null
+          receipt_number?: string
+          sent_at?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "donation_receipts_donation_id_fkey"
+            columns: ["donation_id"]
+            isOneToOne: false
+            referencedRelation: "donations"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      donations: {
+        Row: {
+          amount: number
+          campaign_id: string | null
+          completed_at: string | null
+          created_at: string | null
+          currency: string | null
+          donor_id: string | null
+          fund_type: string
+          gift_aid_amount: number | null
+          gift_aid_claimed: boolean | null
+          id: string
+          idempotency_key: string | null
+          is_recurring: boolean | null
+          metadata: Json | null
+          recurring_interval: string | null
+          status: string | null
+          stripe_checkout_session_id: string | null
+          stripe_payment_intent_id: string | null
+          stripe_subscription_id: string | null
+        }
+        Insert: {
+          amount: number
+          campaign_id?: string | null
+          completed_at?: string | null
+          created_at?: string | null
+          currency?: string | null
+          donor_id?: string | null
+          fund_type: string
+          gift_aid_amount?: number | null
+          gift_aid_claimed?: boolean | null
+          id?: string
+          idempotency_key?: string | null
+          is_recurring?: boolean | null
+          metadata?: Json | null
+          recurring_interval?: string | null
+          status?: string | null
+          stripe_checkout_session_id?: string | null
+          stripe_payment_intent_id?: string | null
+          stripe_subscription_id?: string | null
+        }
+        Update: {
+          amount?: number
+          campaign_id?: string | null
+          completed_at?: string | null
+          created_at?: string | null
+          currency?: string | null
+          donor_id?: string | null
+          fund_type?: string
+          gift_aid_amount?: number | null
+          gift_aid_claimed?: boolean | null
+          id?: string
+          idempotency_key?: string | null
+          is_recurring?: boolean | null
+          metadata?: Json | null
+          recurring_interval?: string | null
+          status?: string | null
+          stripe_checkout_session_id?: string | null
+          stripe_payment_intent_id?: string | null
+          stripe_subscription_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "donations_donor_id_fkey"
+            columns: ["donor_id"]
+            isOneToOne: false
+            referencedRelation: "donors"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      donors: {
+        Row: {
+          address_line1: string | null
+          address_line2: string | null
+          city: string | null
+          country: string | null
+          created_at: string | null
+          email: string
+          full_name: string
+          gift_aid_declaration_date: string | null
+          gift_aid_declaration_version: string | null
+          gift_aid_eligible: boolean | null
+          id: string
+          phone: string | null
+          postcode: string | null
+          stripe_customer_id: string | null
+          updated_at: string | null
+        }
+        Insert: {
+          address_line1?: string | null
+          address_line2?: string | null
+          city?: string | null
+          country?: string | null
+          created_at?: string | null
+          email: string
+          full_name: string
+          gift_aid_declaration_date?: string | null
+          gift_aid_declaration_version?: string | null
+          gift_aid_eligible?: boolean | null
+          id?: string
+          phone?: string | null
+          postcode?: string | null
+          stripe_customer_id?: string | null
+          updated_at?: string | null
+        }
+        Update: {
+          address_line1?: string | null
+          address_line2?: string | null
+          city?: string | null
+          country?: string | null
+          created_at?: string | null
+          email?: string
+          full_name?: string
+          gift_aid_declaration_date?: string | null
+          gift_aid_declaration_version?: string | null
+          gift_aid_eligible?: boolean | null
+          id?: string
+          phone?: string | null
+          postcode?: string | null
+          stripe_customer_id?: string | null
+          updated_at?: string | null
+        }
+        Relationships: []
+      }
       event_proposals: {
         Row: {
           arabic: string | null
@@ -155,6 +315,59 @@ export type Database = {
         }
         Relationships: []
       }
+      gift_aid_declarations: {
+        Row: {
+          address_line1: string
+          address_line2: string | null
+          city: string
+          declaration_text: string
+          declaration_version: string
+          declared_at: string | null
+          donor_id: string
+          full_name: string
+          id: string
+          ip_address: string | null
+          postcode: string
+          user_agent: string | null
+        }
+        Insert: {
+          address_line1: string
+          address_line2?: string | null
+          city: string
+          declaration_text: string
+          declaration_version: string
+          declared_at?: string | null
+          donor_id: string
+          full_name: string
+          id?: string
+          ip_address?: string | null
+          postcode: string
+          user_agent?: string | null
+        }
+        Update: {
+          address_line1?: string
+          address_line2?: string | null
+          city?: string
+          declaration_text?: string
+          declaration_version?: string
+          declared_at?: string | null
+          donor_id?: string
+          full_name?: string
+          id?: string
+          ip_address?: string | null
+          postcode?: string
+          user_agent?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "gift_aid_declarations_donor_id_fkey"
+            columns: ["donor_id"]
+            isOneToOne: false
+            referencedRelation: "donors"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       prayer_times: {
         Row: {
           asr: string
@@ -191,12 +404,74 @@ export type Database = {
         }
         Relationships: []
       }
+      subscriptions: {
+        Row: {
+          amount: number
+          cancelled_at: string | null
+          created_at: string | null
+          currency: string | null
+          current_period_end: string | null
+          current_period_start: string | null
+          donor_id: string | null
+          fund_type: string
+          gift_aid_eligible: boolean | null
+          id: string
+          interval: string | null
+          status: string | null
+          stripe_price_id: string | null
+          stripe_subscription_id: string
+          updated_at: string | null
+        }
+        Insert: {
+          amount: number
+          cancelled_at?: string | null
+          created_at?: string | null
+          currency?: string | null
+          current_period_end?: string | null
+          current_period_start?: string | null
+          donor_id?: string | null
+          fund_type: string
+          gift_aid_eligible?: boolean | null
+          id?: string
+          interval?: string | null
+          status?: string | null
+          stripe_price_id?: string | null
+          stripe_subscription_id: string
+          updated_at?: string | null
+        }
+        Update: {
+          amount?: number
+          cancelled_at?: string | null
+          created_at?: string | null
+          currency?: string | null
+          current_period_end?: string | null
+          current_period_start?: string | null
+          donor_id?: string | null
+          fund_type?: string
+          gift_aid_eligible?: boolean | null
+          id?: string
+          interval?: string | null
+          status?: string | null
+          stripe_price_id?: string | null
+          stripe_subscription_id?: string
+          updated_at?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "subscriptions_donor_id_fkey"
+            columns: ["donor_id"]
+            isOneToOne: false
+            referencedRelation: "donors"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
     }
     Views: {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      generate_receipt_number: { Args: never; Returns: string }
     }
     Enums: {
       [_ in never]: never
