@@ -3,7 +3,6 @@ import { ArrowRight, MapPin, Users, Heart } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { usePrayerTimes } from '@/hooks/usePrayerTimes';
 import MonthlyPrayerTimesModal from './MonthlyPrayerTimesModal';
-import DonationModal from './DonationModal';
 
 const HeroSection = () => {
   const { prayerData, loading } = usePrayerTimes(); 
@@ -111,11 +110,6 @@ const HeroSection = () => {
       <MonthlyPrayerTimesModal 
         isOpen={showMonthly} 
         onClose={() => setShowMonthly(false)} 
-      />
-
-      <DonationModal 
-        isOpen={showDonationModal} 
-        onClose={() => setShowDonationModal(false)} 
       />
     </section>
   );

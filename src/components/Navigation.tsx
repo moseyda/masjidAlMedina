@@ -9,7 +9,6 @@ import Calendar01Icon from './ui/calendar-01-stroke-rounded';
 import InformationCircleIcon from './ui/information-circle-stroke-rounded';
 import UserMultiple02Icon from './ui/user-multiple-02-stroke-rounded';
 import Call02Icon from './ui/contact';
-import DonationModal from './DonationModal';
 
 const Navigation = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -110,12 +109,6 @@ const Navigation = () => {
           )}
         </div>
       </nav>
-
-      {/* Donation Modal */}
-      <DonationModal 
-        isOpen={showDonationModal} 
-        onClose={() => setShowDonationModal(false)} 
-      />
     </>
   );
 };
