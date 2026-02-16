@@ -23,6 +23,10 @@ const Navigation = () => {
     { name: 'Contact', href: '#contact', icon: <Call02Icon className="w-5 h-5" /> },
   ];
 
+
+    const DONATION_URL = 'https://your-charity-platform.com/your-campaign';
+
+
   return (
     <>
       <nav className="fixed top-0 left-0 right-0 z-50 bg-background/95 backdrop-blur-md border-b border-border shadow-soft">
@@ -65,7 +69,7 @@ const Navigation = () => {
             <div className="flex items-center space-x-3">
               <Button 
                 className="mosque-button hidden sm:flex items-center space-x-2"
-                onClick={() => setShowDonationModal(true)}
+              onClick={() => window.open(DONATION_URL, '_blank')}
               >
                 <Heart className="w-4 h-4" />
                 <span>Donate</span>
@@ -99,7 +103,7 @@ const Navigation = () => {
                 className="mosque-button w-full flex items-center justify-center space-x-2 mt-4"
                 onClick={() => {
                   setIsOpen(false);
-                  setShowDonationModal(true);
+                  window.open(DONATION_URL, '_blank');
                 }}
               >
                 <Heart className="w-4 h-4" />

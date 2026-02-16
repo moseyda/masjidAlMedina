@@ -7,8 +7,7 @@ import { AuthProvider } from "./context/AuthContext";
 import Index from "./pages/Index";
 import AdminLogin from "./pages/AdminLogin";
 import AdminDashboard from "./pages/AdminDashboard";
-import DonationSuccess from "./pages/DonationSuccess";
-import DonationCancelled from "./pages/DonationCancelled";
+
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -24,8 +23,6 @@ const App = () => (
             <Route path="/" element={<Index />} />
             <Route path="/admin/login" element={<AdminLogin />} />
             <Route path="/admin" element={<AdminDashboard />} />
-            <Route path="/donation/success" element={<DonationSuccess />} />
-            <Route path="/donation/cancelled" element={<DonationCancelled />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </BrowserRouter>
