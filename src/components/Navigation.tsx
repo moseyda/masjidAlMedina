@@ -1,6 +1,5 @@
 import { useState } from 'react';
-import { Link } from "react-router-dom";
-import { Menu, X, Heart } from 'lucide-react';
+import { Menu, X, Heart, ExternalLink } from 'lucide-react';
 import MosqueIcon from '@/components/ui/MosqueIcon';
 import { Button } from '@/components/ui/button';
 import SalahIcon from '@/components/ui/salah-stroke-rounded';
@@ -9,10 +8,27 @@ import Calendar01Icon from './ui/calendar-01-stroke-rounded';
 import InformationCircleIcon from './ui/information-circle-stroke-rounded';
 import UserMultiple02Icon from './ui/user-multiple-02-stroke-rounded';
 import Call02Icon from './ui/contact';
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from '@/components/ui/alert-dialog';
+
+const ZEFFY_URL = 'https://www.zeffy.com/en-GB/donation-form/give-charity-without-delay-for-it-stands-in-the-way-of-calamity';
 
 const Navigation = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const [showDonationModal, setShowDonationModal] = useState(false);
+  const [showDonateDialog, setShowDonateDialog] = useState(false);
+
+  const openDonationPage = () => {
+    window.open(ZEFFY_URL, '_blank');
+    setShowDonateDialog(false);
+  };
 
   const navItems = [
     { name: 'Home', href: '#home', icon: <Mosque02Icon className="w-5 h-5" /> },
@@ -23,10 +39,6 @@ const Navigation = () => {
     { name: 'Contact', href: '#contact', icon: <Call02Icon className="w-5 h-5" /> },
   ];
 
-
-    const DONATION_URL = 'https://your-charity-platform.com/your-campaign';
-
-
   return (
     <>
       <nav className="fixed top-0 left-0 right-0 z-50 bg-background/95 backdrop-blur-md border-b border-border shadow-soft">
@@ -36,20 +48,14 @@ const Navigation = () => {
             <div onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })} className="flex items-center space-x-3 cursor-pointer">
               <div className="w-10 h-10 bg-gradient-primary rounded-full flex items-center justify-center">
                 <div className="w-7 h-7 bg-gold rounded-sm flex items-center justify-center">
-                  <MosqueIcon
-                    size={18}
-                    color="hsl(var(--primary-foreground))"
-                    strokeWidth={0}
-                  />
+                  <MosqueIcon size={18} color="hsl(var(--primary-foreground))" strokeWidth={0} />
                 </div>
               </div>
-
               <div>
                 <h1 className="font-bold text-lg text-primary">Masjid Al-Madina</h1>
                 <p className="text-xs text-muted-foreground">Cheltenham</p>
               </div>
             </div>
-
 
             {/* Desktop Navigation */}
             <div className="hidden md:flex items-center space-x-1">
@@ -69,13 +75,12 @@ const Navigation = () => {
             <div className="flex items-center space-x-3">
               <Button 
                 className="mosque-button hidden sm:flex items-center space-x-2"
-              onClick={() => window.open(DONATION_URL, '_blank')}
+                onClick={() => setShowDonateDialog(true)}
               >
                 <Heart className="w-4 h-4" />
                 <span>Donate</span>
               </Button>
 
-              {/* Mobile menu button */}
               <button
                 onClick={() => setIsOpen(!isOpen)}
                 className="md:hidden p-2 rounded-lg text-foreground hover:bg-accent transition-colors"
@@ -103,7 +108,7 @@ const Navigation = () => {
                 className="mosque-button w-full flex items-center justify-center space-x-2 mt-4"
                 onClick={() => {
                   setIsOpen(false);
-                  window.open(DONATION_URL, '_blank');
+                  setShowDonateDialog(true);
                 }}
               >
                 <Heart className="w-4 h-4" />
@@ -113,6 +118,29 @@ const Navigation = () => {
           )}
         </div>
       </nav>
+
+      {/* Donation Redirect Dialog */}
+      <AlertDialog open={showDonateDialog} onOpenChange={setShowDonateDialog}>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle className="flex items-center gap-2">
+              <Heart className="w-5 h-5 text-primary" />
+              Leaving Masjid Al-Madina
+            </AlertDialogTitle>
+            <AlertDialogDescription>
+              You will be redirected to <strong>Zeffy</strong>, our secure donation partner. 
+              Zeffy is a 100% free platform. Your entire donation goes to the masjid.
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel>Cancel</AlertDialogCancel>
+            <AlertDialogAction onClick={openDonationPage} className="mosque-button">
+              <ExternalLink className="w-4 h-4 mr-2" />
+              Continue to Zeffy
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
     </>
   );
 };
