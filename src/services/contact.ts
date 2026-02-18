@@ -16,3 +16,12 @@ export async function submitContactMessage(contactData: ContactMessageInsert): P
   if (error) throw error
   return data
 }
+
+export async function getContactMessages(): Promise<ContactMessage[]> {
+  const { data, error } = await supabase
+    .from('contact_messages')
+    .select('*')
+    .order('created_at', { ascending: false });
+  if (error) throw error;
+  return data || [];
+}

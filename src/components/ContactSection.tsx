@@ -42,6 +42,7 @@ const ContactSection = () => {
       toast({
         title: 'Message sent successfully!',
         description: 'We typically respond within 24 hours during business days.',
+        variant: 'default',
       });
 
       // Reset form

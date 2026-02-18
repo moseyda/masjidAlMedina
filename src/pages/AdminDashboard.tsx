@@ -4,11 +4,12 @@ import { useAuth } from '@/context/AuthContext'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
-import { LogOut, Calendar, Megaphone, Clock, FileText } from 'lucide-react'
+import { Mail, LogOut, Calendar, Megaphone, Clock, FileText } from 'lucide-react'
 import EventsManager from '@/components/admin/EventsManager'
 import AnnouncementsManager from '@/components/admin/AnnouncementsManager'
 import PrayerTimesManager from '@/components/admin/PrayerTimesManager'
 import EventProposalsManager from '@/components/admin/EventProposalsManager'
+import ContactMessagesManager from '@/components/admin/ContactMessagesManager'
 
 const AdminDashboard = () => {
   const { user, signOut, loading } = useAuth()
@@ -57,7 +58,7 @@ const AdminDashboard = () => {
       {/* Main Content */}
       <main className="container mx-auto px-4 py-8">
         <Tabs defaultValue="proposals" className="space-y-6">
-          <TabsList className="grid grid-cols-4 w-full max-w-2xl">
+          <TabsList className="grid grid-cols-5 w-full max-w-4xl">
             <TabsTrigger value="proposals" className="flex items-center gap-2">
               <FileText className="w-4 h-4" />
               <span className="hidden sm:inline">Proposals</span>
@@ -73,6 +74,10 @@ const AdminDashboard = () => {
             <TabsTrigger value="prayer-times" className="flex items-center gap-2">
               <Clock className="w-4 h-4" />
               <span className="hidden sm:inline">Prayer Times</span>
+            </TabsTrigger>
+            <TabsTrigger value="contact-messages" className="flex items-center gap-2">
+              <Mail className="w-4 h-4" />
+              <span className="hidden sm:inline">Contact Messages</span>
             </TabsTrigger>
           </TabsList>
 
@@ -116,6 +121,17 @@ const AdminDashboard = () => {
               </CardHeader>
               <CardContent>
                 <PrayerTimesManager />
+              </CardContent>
+            </Card>
+          </TabsContent>
+
+          <TabsContent value="contact-messages">
+            <Card>
+              <CardHeader>
+                <CardTitle>Contact Messages</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <ContactMessagesManager />
               </CardContent>
             </Card>
           </TabsContent>
