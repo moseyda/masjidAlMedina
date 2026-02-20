@@ -174,9 +174,9 @@ const Footer = () => {
             </div>
             
             <div className="flex items-center space-x-4 text-sm">
-              <a href="#" className="opacity-80 hover:opacity-100 transition-opacity">Privacy Policy</a>
-              <a href="#" className="opacity-80 hover:opacity-100 transition-opacity">Terms of Service</a>
-              <a href="#" className="opacity-80 hover:opacity-100 transition-opacity">Accessibility</a>
+              <a href="/privacy-policy" className="opacity-80 hover:opacity-100 transition-opacity">Privacy Policy</a>
+              <a href="/terms-of-service" className="opacity-80 hover:opacity-100 transition-opacity">Terms of Service</a>
+              <a href="/accessibility" className="opacity-80 hover:opacity-100 transition-opacity">Accessibility</a>
             </div>
           </div>
         </div>
