@@ -1,7 +1,20 @@
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { ArrowLeft } from 'lucide-react';
 
 const TermsOfService = () => (
   <section id="terms-of-service" className="container mx-auto px-4 py-12 max-w-3xl">
+    <div className="mb-8">
+      <a
+        href="/"
+        aria-label="Back to Home"
+        className="inline-flex items-center gap-2 rounded-full bg-muted px-4 py-2 hover:bg-muted/70 transition group"
+      >
+        <span className="flex items-center justify-center w-8 h-8 rounded-full bg-gray-200 transition-transform group-hover:-translate-x-1">
+          <ArrowLeft className="w-5 h-5 text-muted-foreground" />
+        </span>
+        <span className="text-sm text-muted-foreground font-medium">Back to Home</span>
+      </a>
+    </div>
     <Card>
       <CardHeader>
         <CardTitle className="text-2xl font-bold text-primary">Terms of Service</CardTitle>
