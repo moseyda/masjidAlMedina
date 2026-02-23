@@ -59,7 +59,7 @@ const EventsSection = () => {
   };
 
   return (
-    <section id="events" className="py-16 bg-muted/30">
+    <section id="events" className="py-16 bg-background">
       <div className="container mx-auto px-4">
         {/* Header */}
         <div className="text-center mb-12">

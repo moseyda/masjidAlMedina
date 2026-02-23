@@ -44,7 +44,7 @@ const ServicesSection = () => {
   return (
     <section
       id="services"
-      className="py-16 bg-background select-none"
+      className="py-16 bg-muted/30 select-none"
       aria-label="Masjid Services"
     >
         <div className="container mx-auto px-4">   
