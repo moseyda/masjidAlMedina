@@ -1,43 +1,69 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Menu, X, Heart, ExternalLink } from 'lucide-react';
-import MosqueIcon from '@/components/ui/MosqueIcon';
 import { Button } from '@/components/ui/button';
+
+import { 
+  AlertDialog, 
+  AlertDialogAction, 
+  AlertDialogCancel, 
+  AlertDialogContent, 
+  AlertDialogDescription, 
+  AlertDialogFooter, 
+  AlertDialogHeader, 
+  AlertDialogTitle 
+} from '@/components/ui/alert-dialog';
+
+import MosqueIcon from '@/components/ui/MosqueIcon';
 import SalahIcon from '@/components/ui/salah-stroke-rounded';
 import Mosque02Icon from './ui/mosque-02-stroke-rounded';
 import Calendar01Icon from './ui/calendar-01-stroke-rounded';
 import InformationCircleIcon from './ui/information-circle-stroke-rounded';
 import UserMultiple02Icon from './ui/user-multiple-02-stroke-rounded';
 import Call02Icon from './ui/contact';
-import {
-  AlertDialog,
-  AlertDialogAction,
-  AlertDialogCancel,
-  AlertDialogContent,
-  AlertDialogDescription,
-  AlertDialogFooter,
-  AlertDialogHeader,
-  AlertDialogTitle,
-} from '@/components/ui/alert-dialog';
 
 const ZEFFY_URL = 'https://www.zeffy.com/en-GB/donation-form/give-charity-without-delay-for-it-stands-in-the-way-of-calamity';
+
+const navItems = [
+  { name: 'Home', href: '#home', icon: <Mosque02Icon className="w-5 h-5" />, section: 'home' },
+  { name: 'Prayer Times', href: '#prayer-times', icon: <SalahIcon className="w-5 h-5" />, section: 'prayer-times' },
+  { name: 'Events', href: '#events', icon: <Calendar01Icon className="w-5 h-5" />, section: 'events' },
+  { name: 'About', href: '#about', icon: <InformationCircleIcon className="w-5 h-5" />, section: 'about' },
+  { name: 'Services', href: '#services', icon: <UserMultiple02Icon className="w-5 h-5" />, section: 'services' },
+  { name: 'Contact', href: '#contact', icon: <Call02Icon className="w-5 h-5" />, section: 'contact' },
+];
 
 const Navigation = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [showDonateDialog, setShowDonateDialog] = useState(false);
+  const [activeSection, setActiveSection] = useState('home');
 
   const openDonationPage = () => {
     window.open(ZEFFY_URL, '_blank');
     setShowDonateDialog(false);
   };
 
-  const navItems = [
-    { name: 'Home', href: '#home', icon: <Mosque02Icon className="w-5 h-5" /> },
-    { name: 'Prayer Times', href: '#prayer-times', icon: <SalahIcon className="w-5 h-5" /> },
-    { name: 'Events', href: '#events', icon: <Calendar01Icon className="w-5 h-5" /> },
-    { name: 'About', href: '#about', icon: <InformationCircleIcon className="w-5 h-5" /> },
-    { name: 'Services', href: '#services', icon: <UserMultiple02Icon className="w-5 h-5" /> },
-    { name: 'Contact', href: '#contact', icon: <Call02Icon className="w-5 h-5" /> },
-  ];
+  // Scroll spy effect
+  useEffect(() => {
+    const handleScroll = () => {
+      let current = 'home';
+      for (const item of navItems) {
+        const sectionId = item.href.replace('#', '');
+        const section = document.getElementById(sectionId);
+        if (section) {
+          const rect = section.getBoundingClientRect();
+          if (rect.top <= 75 && rect.bottom > 75) {
+            current = item.section;
+            break;
+          }
+        }
+      }
+      setActiveSection(current);
+    };
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    handleScroll();
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
   return (
     <>
@@ -63,7 +89,11 @@ const Navigation = () => {
                 <a
                   key={item.name}
                   href={item.href}
-                  className="flex items-center space-x-2 px-3 py-2 rounded-lg text-base font-medium text-foreground hover:bg-accent hover:text-accent-foreground transition-all duration-200"
+                  className={`relative flex items-center space-x-2 px-3 py-2 rounded-lg text-base font-medium transition-all duration-200
+                    ${activeSection === item.section
+                      ? 'bg-accent text-accent-foreground'
+                      : 'text-foreground hover:bg-accent hover:text-accent-foreground'}
+                  `}
                 >
                   {item.icon}
                   <span>{item.name}</span>
@@ -98,7 +128,11 @@ const Navigation = () => {
                   key={item.name}
                   href={item.href}
                   onClick={() => setIsOpen(false)}
-                  className="flex items-center space-x-3 px-3 py-3 rounded-lg text-base font-medium text-foreground hover:bg-accent hover:text-accent-foreground transition-all duration-200"
+                  className={`flex items-center space-x-3 px-3 py-3 rounded-lg text-base font-medium transition-all duration-200
+                    ${activeSection === item.section
+                      ? 'bg-accent text-accent-foreground'
+                      : 'text-foreground hover:bg-accent hover:text-accent-foreground'}
+                  `}
                 >
                   {item.icon}
                   <span>{item.name}</span>
