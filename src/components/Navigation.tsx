@@ -51,7 +51,7 @@ const Navigation = () => {
         const section = document.getElementById(sectionId);
         if (section) {
           const rect = section.getBoundingClientRect();
-          if (rect.top <= 75 && rect.bottom > 75) {
+          if (rect.top <= 80 && rect.bottom > 80) {
             current = item.section;
             break;
           }
