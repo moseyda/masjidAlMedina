@@ -48,11 +48,11 @@ const ServicesSection = () => {
       aria-label="Masjid Services"
     >
         <div className="container mx-auto px-4">   
-        <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold text-primary mb-4">
-            Masjid Services
-            </h2>
-        </div>
+            <div className="text-center mb-12">
+                <h2 className="text-3xl md:text-4xl font-bold text-primary mb-4">
+                Masjid Services
+                </h2>
+            </div>
         <div
             className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
             role="list"

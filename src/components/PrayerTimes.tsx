@@ -36,29 +36,26 @@ const PrayerTimes = () => {
   return (
     <section id="prayer-times" className="py-12 bg-muted/30 select-none">
       <div className="container mx-auto px-4">
+              <div className="text-center mb-12">
+                <h2 className="text-3xl md:text-4xl font-bold text-primary mb-4">
+                Prayer Times
+                </h2>
+            </div>
         <Card className="prayer-time-card max-w-5xl mx-auto">
           <CardHeader>
-            <CardTitle className="flex items-center justify-between flex-wrap gap-4">
-              <div className="flex items-center space-x-3">
-                <div className="w-10 h-10 bg-gradient-primary rounded-full flex items-center justify-center">
-                  <Clock className="w-5 h-5 text-primary-foreground" />
-                </div>
-                <div>
-                  <h2 className="text-xl font-bold text-primary">Prayer Times</h2>
-                  <p className="text-sm text-muted-foreground font-arabic">أوقات الصلاة</p>
-                </div>
-              </div>
-
-              <div className="text-right">
-                <div className="flex items-center space-x-2 text-sm text-muted-foreground mb-1">
+            <CardTitle>
+              <div className="flex flex-col md:flex-row md:items-center md:space-x-6 text-sm text-muted-foreground">
+                <div className="flex items-center space-x-2">
                   <Calendar className="w-4 h-4" />
                   <span>{prayerData.date}</span>
-                </div>
-                <div className="flex items-center space-x-2 text-sm text-muted-foreground">
+                  <div className="text-xs text-gold font-arabic mt-1 md:mt-0 md:ml-0">
+                    {prayerData.hijriDate}
+                  </div>
+                  <span className="mx-2">|</span>
                   <MapPin className="w-4 h-4" />
                   <span>{prayerData.location}</span>
                 </div>
-                <p className="text-xs text-gold font-arabic mt-1">{prayerData.hijriDate}</p>
+
               </div>
             </CardTitle>
           </CardHeader>
