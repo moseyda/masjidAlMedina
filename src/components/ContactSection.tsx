@@ -70,34 +70,30 @@ const ContactSection = () => {
     {
       icon: <Phone className="w-5 h-5" />,
       title: "Phone",
-      details: ["+44 1242 123456", "Emergency: +44 7700 900123"],
-      action: "Call Us"
+      details: ["01242 237992"],
+      action: "Call Us",
+      onAction: () => window.open("tel:+441242123456"),
+
     },
     {
       icon: <Mail className="w-5 h-5" />,
       title: "Email",
       details: ["info@masjidalmadina.org.uk", "imam@masjidalmadina.org.uk"],
-      action: "Email Us"
+      action: "Email Us",
+      onAction: () => window.open("mailto:info@masjidalmadina.org.uk"),
     },
     {
       icon: <MapPin className="w-5 h-5" />,
       title: "Address",
-      details: ["123 Bath Road", "Cheltenham GL50 1AB", "Gloucestershire, UK"],
-      action: "Get Directions"
+      details: ["25 Sherborne Pl", "Cheltenham GL52 2RW", "Gloucestershire, UK"],
+      action: "Get Directions",
+      onAction: () => window.open("https://maps.google.com/?q=25+Sherborne+Pl,+Cheltenham+GL52+2RW", "_blank"),
+
     },
     {
       icon: <Clock className="w-5 h-5" />,
       title: "Opening Hours",
-      details: ["Daily: 30 min before Fajr - 30 min after Isha", "Office: Mon-Fri 9:00 AM - 5:00 PM"],
-      action: "View Schedule"
-    }
-  ];
-
-  const openingHours = [
-    { day: "Monday - Friday", hours: "9:00 AM - 5:00 PM (Office)", prayer: "30 min before Fajr - 30 min after Isha" },
-    { day: "Saturday", hours: "10:00 AM - 4:00 PM (Office)", prayer: "30 min before Fajr - 30 min after Isha" },
-    { day: "Sunday", hours: "Closed (Office)", prayer: "30 min before Fajr - 30 min after Isha" },
-    { day: "Friday (Jummah)", hours: "9:00 AM - 5:00 PM (Office)", prayer: "Extended hours for Jummah prayers" }
+      details: ["Daily: 13.15 - 22:45", "Office: Mon-Fri 9:00 - 17:00"],    }
   ];
 
   return (
@@ -117,13 +113,11 @@ const ContactSection = () => {
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
           {/* Contact Information */}
-          <div className="lg:col-span-1">
-            <h3 className="text-2xl font-bold text-primary mb-6">Get in Touch</h3>
-            
-            <div className="space-y-4 mb-8">
+          <div className="lg:col-span-1">            
+            <div className="space-y-3 mb-8">
               {contactInfo.map((info, index) => (
                 <Card key={index} className="prayer-time-card group hover:scale-105">
-                  <CardContent className="p-4">
+                  <CardContent className="p-5">
                     <div className="flex items-start space-x-3">
                       <div className="w-10 h-10 bg-gradient-primary rounded-lg flex items-center justify-center text-primary-foreground group-hover:scale-110 transition-transform duration-300">
                         {info.icon}
@@ -135,40 +129,17 @@ const ContactSection = () => {
                             {detail}
                           </p>
                         ))}
-                        <Button variant="outline" size="sm" className="mt-2 text-xs">
+                      {info.action && (
+                        <Button variant="outline" size="sm" className="mt-2 text-xs border-primary/20" onClick={info.onAction}>
                           {info.action}
                         </Button>
+                      )}
                       </div>
                     </div>
                   </CardContent>
                 </Card>
               ))}
             </div>
-
-            {/* Opening Hours */}
-            <Card className="prayer-time-card">
-              <CardHeader>
-                <CardTitle className="text-lg text-primary flex items-center">
-                  <Clock className="w-5 h-5 mr-2" />
-                  Opening Hours
-                </CardTitle>
-              </CardHeader>
-              <CardContent>
-                <div className="space-y-3">
-                  {openingHours.map((schedule, index) => (
-                    <div key={index} className="border-b border-border last:border-b-0 pb-3 last:pb-0">
-                      <div className="flex justify-between items-start">
-                        <div>
-                          <p className="font-medium text-sm">{schedule.day}</p>
-                          <p className="text-xs text-muted-foreground">Office: {schedule.hours}</p>
-                        </div>
-                      </div>
-                      <p className="text-xs text-primary mt-1">Prayer Hall: {schedule.prayer}</p>
-                    </div>
-                  ))}
-                </div>
-              </CardContent>
-            </Card>
           </div>
 
           <div className="lg:col-span-2 space-y-8">
