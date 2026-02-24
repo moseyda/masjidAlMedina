@@ -40,12 +40,14 @@ const Footer = () => {
           {/* Mosque Info */}
           <div className="space-y-4">
             {/* Logo */}
-            <div className="flex items-center space-x-3">
-              <div className="w-10 h-10 bg-gradient-primary rounded-full flex items-center justify-center">
-                <div className="w-7 h-7 bg-gold rounded-sm flex items-center justify-center">
-                  <MosqueIcon size={18} color="hsl(var(--primary-foreground))" strokeWidth={0} />
+              <div onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })} className="flex items-center space-x-3 cursor-pointer">
+                <div className="flex items-center space-x-3">
+                  <div className="w-10 h-10 bg-gradient-primary rounded-full flex items-center justify-center">
+                    <div className="w-7 h-7 bg-gold rounded-sm flex items-center justify-center">
+                      <MosqueIcon size={18} color="hsl(var(--primary-foreground))" strokeWidth={0} />
+                    </div>
+                  </div>
                 </div>
-              </div>
               <div>
                 <h3 className="font-bold text-lg text-white">Masjid Al-Madina</h3>
                 <p className="text-xs text-muted-foreground">Cheltenham</p>
@@ -58,11 +60,11 @@ const Footer = () => {
             <div className="space-y-2">
               <div className="flex items-center space-x-2 text-sm">
                 <MapPin className="w-4 h-4 opacity-80" />
-                <span>123 Bath Road, Cheltenham GL50 1AB</span>
+                <span>25 Sherborne Pl, Cheltenham GL52 2RW</span>
               </div>
               <div className="flex items-center space-x-2 text-sm">
                 <Phone className="w-4 h-4 opacity-80" />
-                <span>+44 1242 123456</span>
+                <span>01242237992</span>
               </div>
               <div className="flex items-center space-x-2 text-sm">
                 <Mail className="w-4 h-4 opacity-80" />
@@ -130,28 +132,6 @@ const Footer = () => {
                   </a>
                 ))}
               </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      {/* Prayer Times Strip */}
-      <div className="border-t border-white/10 bg-primary-dark">
-        <div className="container mx-auto px-4 py-4">
-          <div className="flex flex-wrap items-center justify-center gap-6 text-sm">
-            <div className="flex items-center space-x-2">
-              <span className="opacity-80">Next Prayer:</span>
-              <span className="font-semibold text-gold">Maghrib at 6:45 PM</span>
-            </div>
-            <div className="hidden sm:block w-px h-4 bg-white/20"></div>
-            <div className="flex items-center space-x-2">
-              <span className="opacity-80">Jummah:</span>
-              <span className="font-semibold">1:15 PM & 2:15 PM</span>
-            </div>
-            <div className="hidden sm:block w-px h-4 bg-white/20"></div>
-            <div className="flex items-center space-x-2">
-              <span className="opacity-80">Emergency:</span>
-              <span className="font-semibold">+44 7700 900123</span>
             </div>
           </div>
         </div>
