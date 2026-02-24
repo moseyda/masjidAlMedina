@@ -1,5 +1,6 @@
 import { Heart, Phone, Mail, MapPin, Facebook, Twitter, Instagram, Youtube } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import MosqueIcon from '@/components/ui/MosqueIcon';
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
@@ -38,23 +39,22 @@ const Footer = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
           {/* Mosque Info */}
           <div className="space-y-4">
+            {/* Logo */}
             <div className="flex items-center space-x-3">
-              <div className="w-10 h-10 bg-gold rounded-full flex items-center justify-center">
-                <div className="w-6 h-6 bg-primary rounded-sm rotate-45 flex items-center justify-center">
-                  <div className="w-3 h-3 bg-white rounded-full"></div>
+              <div className="w-10 h-10 bg-gradient-primary rounded-full flex items-center justify-center">
+                <div className="w-7 h-7 bg-gold rounded-sm flex items-center justify-center">
+                  <MosqueIcon size={18} color="hsl(var(--primary-foreground))" strokeWidth={0} />
                 </div>
               </div>
               <div>
-                <h3 className="font-bold text-lg">Masjid Al-Madina</h3>
-                <p className="text-sm opacity-80">Cheltenham</p>
+                <h3 className="font-bold text-lg text-white">Masjid Al-Madina</h3>
+                <p className="text-xs text-muted-foreground">Cheltenham</p>
               </div>
             </div>
-            
             <p className="text-sm opacity-90 leading-relaxed">
               Serving the Muslim community of Cheltenham and surrounding areas since 1995. 
               A place of worship, learning, and community building.
             </p>
-            
             <div className="space-y-2">
               <div className="flex items-center space-x-2 text-sm">
                 <MapPin className="w-4 h-4 opacity-80" />
@@ -106,7 +106,6 @@ const Footer = () => {
             <p className="text-sm opacity-90 mb-4">
               Subscribe to our newsletter for updates on events, prayer times, and community news.
             </p>
-            
             <div className="space-y-3 mb-6">
               <input 
                 type="email" 
@@ -117,7 +116,6 @@ const Footer = () => {
                 Subscribe
               </Button>
             </div>
-
             <div>
               <h5 className="font-medium mb-3">Follow Us</h5>
               <div className="flex space-x-3">
@@ -166,13 +164,11 @@ const Footer = () => {
             <div className="text-sm opacity-80">
               © {currentYear} Masjid Al-Madina. All rights reserved.
             </div>
-            
             <div className="flex items-center space-x-2 text-sm">
               <span className="opacity-80">Made with</span>
               <Heart className="w-4 h-4 text-red-400" />
               <span className="opacity-80">for our community</span>
             </div>
-            
             <div className="flex items-center space-x-4 text-sm">
               <a href="/privacy-policy" className="opacity-80 hover:opacity-100 transition-opacity">Privacy Policy</a>
               <a href="/terms-of-service" className="opacity-80 hover:opacity-100 transition-opacity">Terms of Service</a>
